@@ -35,11 +35,14 @@ string text = Console.ReadLine() ?? "";
 Console.WriteLine("...Sending the following request to Azure OpenAI endpoint...");  
 Console.WriteLine("Request: " + text + "\n");
 
+ChatCompletionOptions chatCompletionsOptions = new();
+chatCompletionsOptions.AddDataSource(ownDataConfig);
+
 ChatCompletion completion = chatClient.CompleteChat(
-    [
-        new SystemChatMessage("You are an AI assistant that helps with travel-related inquiries, offering tips, advice, and recommendations as a knowledgeable travel agent."),
-        new UserChatMessage(text),
-    ],
+[
+    new SystemChatMessage("You are an AI assistant that helps with travel-related inquiries, offering tips, advice, and recommendations as a knowledgeable travel agent."),
+    new UserChatMessage(text),
+],
     chatCompletionsOptions);
 
 ChatMessageContext onYourDataContext = completion.GetMessageContext();
